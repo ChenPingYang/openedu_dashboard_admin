@@ -1,0 +1,359 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="shortcut icon" href="{% static 'img/favicon.png' %}">
+<title>中華開放教育平台</title>
+<!-- w3school  -->
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<!-- Bootstrap Core CSS -->
+<link href="{% static './vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+<!-- MetisMenu CSS -->
+<link href="{% static './vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
+
+<!-- DataTables CSS -->
+<link href="{% static './vendor/datatables-plugins/dataTables.bootstrap.css' %}"
+	rel="stylesheet">
+
+<!-- DataTables Responsive CSS -->
+<link href="{% static './vendor/datatables-responsive/dataTables.responsive.css' %}"
+	rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="{% static 'dist/css/sb-admin-2.css' %}" rel="stylesheet">
+
+<!-- Custom Fonts -->
+<link href="{% static './vendor/font-awesome/css/font-awesome.min.css' %}"
+	rel="stylesheet" type="text/css">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNInG: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+	{% include 'sidebar.html' %}
+		<div id="wrapper">
+		<div id="page-wrapper">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1 class="page-header">異常報告</h1>
+				</div>
+
+				<!-- /.col-lg-12 -->
+			</div>
+
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<div class="row">
+								<div class="col-md-8">資料庫日期異常 {{finalUpdate}}</div>
+								<div class="col-md-4">
+									<a id="dlink" style="display: none;"></a>
+									<button type="button" class="btn btn-info "
+										onclick="tableToExcel('dataTables-example', 'dataTables-example', 'dateError.xls')">下載此表</button>
+								</div>
+							</div>
+						</div>
+						<!-- /.panel-heading -->
+						<div class="panel-body">
+							<table width="100%"
+								class="table table-striped table-bordered table-hover"
+								id="dataTables-example">
+								<thead>
+									<tr class="bg-info">
+										<th>課程代碼</th>
+										<th>課程名稱</th>
+										<th>開課日期</th>
+										<th>結束日期</th>
+										<th>異常原因</th>
+									</tr>
+								</thead>
+								<tbody>
+								{% for rs in dateError  %}
+										<tr>
+										<td><a
+           									href="ChartDataServlet?mode=2&course={{de.0}}"
+											target="_blank"> {{de.0}} </a></td>
+           								<td> {{de.1}} </td>
+           								<td style="text-align: right;">{{de.2}}</td>
+          								<td style="text-align: right;">{{de.3}}</td>
+										<td>{{de.4}}</td>
+										</tr>
+								{% endfor %}
+								</tbody>
+							</table>
+						</div>
+						<!-- /.panel-body -->
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<div class="row">
+								<div class="col-md-8">資料庫影片異常 {{finalUpdate}}</div>
+								<div class="col-md-4">
+									<a id="dlink" style="display: none;"></a>
+									<button type="button" class="btn btn-info "
+										onclick="tableToExcel('dataTables-example1', 'dataTables-example1', 'videoError.xls')">下載此表</button>
+								</div>
+							</div>
+						</div>
+						<!-- /.panel-heading -->
+						<div class="panel-body">
+							<table width="100%"
+								class="table table-striped table-bordered table-hover"
+								id="dataTables-example1">
+								<thead>
+									<tr class="bg-info">
+										<th>課程代碼</th>
+										<th>課程名稱</th>
+										<th>課程影片數目</th>
+										<th>影片關人數</th>
+										<th>異常原因</th>
+									</tr>
+								</thead>
+								<tbody>
+								{% for ve in videoError  %}
+										<tr>
+										<td><a
+           									href="ChartDataServlet?mode=2&course={{ve.0}}"
+											target="_blank"> {{ve.0}} </a></td>
+           								<td> {{ve.1}} </td>
+           								<td style="text-align: right;">{{ve.2}}</td>
+          								<td style="text-align: right;">{{ve.3}}</td>
+										<td>{{ve.4}}</td>
+										</tr>
+								{% endfor %}
+								</tbody>
+							</table>
+						</div>
+						<!-- /.panel-body -->
+					</div>
+					<!-- /.panel -->
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<div class="row">
+								<div class="col-md-8">API異常 {{finalUpdate}}</div>
+								<div class="col-md-4">
+									<a id="dlink" style="display: none;"></a>
+									<button type="button" class="btn btn-info "
+										onclick="tableToExcel('dataTables-example2', 'dataTables-example2', 'APIError.xls')">下載此表</button>
+									<button type="button" class="btn btn-info" id="btnDataTables">dataTables on</button>
+								</div>
+							</div>
+						</div>
+						<!-- /.panel-heading -->
+						<div class="panel-body">
+							<table width="100%"
+								class="table table-striped table-bordered table-hover"
+								id="dataTables-example2">
+								<thead>
+									<tr class="bg-info">
+										<th>課程代碼</th>
+										<th>課程名稱</th>
+										<th>資料庫開課日期</th>
+										<th>API開課日期</th>
+										<th>異常原因</th>
+									</tr>
+								</thead>
+								<tbody>
+								{% for rs in allCueseData  %}
+									<tr id="template">
+										<td><a
+           									href="ChartDataServlet?mode=2&course={{rs.0}}"
+											target="_blank"> {{rs.0}} </a></td>
+           								<td>{{rs.1}} </td>
+										<td>{{rs.2}}</td>
+										<td>null</td>
+										<td>1</td>
+									</tr>
+								{% endfor %}
+								</tbody>
+							</table>
+						</div>
+						<!-- /.panel-body -->
+					</div>
+				</div>
+
+			</div>
+
+			<!-- /.row -->
+		</div>
+	</div>
+
+
+	<!-- jQuery -->
+	<script src="{% static './vendor/jquery/jquery.min.js'%}"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="{% static './vendor/bootstrap/js/bootstrap.min.js'%}"></script>
+
+	<!-- Metis Menu Plugin JavaScript -->
+	<script src="{% static './vendor/metisMenu/metisMenu.min.js'%}"></script>
+
+	<!-- DataTables JavaScript -->
+	<script src="{% static './vendor/datatables/js/jquery.dataTables.js'%}"></script>
+	<script src="{% static './vendor/datatables-plugins/dataTables.bootstrap.min.js'%}"></script>
+	<script src="{% static './vendor/datatables-responsive/dataTables.responsive.js'%}"></script>
+
+	<!-- Custom Theme JavaScript -->
+	<script src="{% static './dist/js/sb-admin-2.js'%}"></script>
+	<!-- Page-Level Demo Scripts - Tables - Use for reference -->
+	
+	<script type="text/javascript">
+	    var finish = false;
+        $(document).ready(function() {
+        	var rows = document.getElementById("dataTables-example2").rows.length;
+        	var count = 0;
+        	$('#dataTables-example2  > tbody > tr').each(function () {
+        		var courseName = $(this).find("td").eq(1).text(); 
+        		var startDate = $(this).find("td").eq(2).text();
+        		var Find = false;
+        		var OnlyFindName = false;
+        		var This = this
+        		$.getJSON("{% static 'data/openeduAPI.js'%}", function(data){
+            		$.each(data, function(i,item){
+            			if(item.courseName ==  courseName && item.startDate == startDate){
+    	       				// $("#category").text(item.category);
+    	       				 Find = true;
+    	       				 return false;
+           				}
+           			});
+            		if(Find == false){
+	            		$.each(data, function(i,item){
+	            			if(item.courseName ==  courseName/* && item.startDate == $("#startDate").text()*/){
+	            				 OnlyFindName = true;
+	            				 $(This).find("td").eq(3).html(item.startDate);
+	            				 return false;
+	            			}
+	           			});
+            		}
+            		if(OnlyFindName){
+            			$(This).find("td").eq(4).html("1_只有找到課程名稱、開課日期找不到");
+//             			alert(courseName+"1");
+            		}
+            		else if(OnlyFindName == false && Find == false){
+            			$(This).find("td").eq(4).html("2_找不到課程名稱及開課日期");
+            			
+//             			alert(courseName+"2");
+            		}
+            		else{
+            			$(This).css('display','none');
+//             			alert(courseName+"3");
+            		}
+            	});
+        		if(count == rows - 1){
+        			finish = true;
+        			alert(count)
+        		}
+        		count = count + 1;
+            });
+//         	if(finish){
+//         		$('#dataTables-example2').DataTable({
+//     				responsive : true
+//     			});
+//         	}
+        	
+        });
+    </script>
+    
+    <script>
+    $("#btnDataTables").click(function(){
+		$('#dataTables-example2').DataTable({
+			responsive : true
+		});
+    });
+    
+    </script>
+
+	<!-- download excel -->
+	<script>
+		function tableToExcel(table, name, filename) {
+			var uri = 'data:application/vnd.ms-excel;base64,';
+
+			var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office"'
+               + '      xmlns:x="urn:schemas-microsoft-com:office:excel"'
+               + '      xmlns="http://www.w3.org/TR/REC-html40">'
+					+ '<head>'
+					+ '<!--[if gte mso 9]>'
+					+ '<xml>'
+					+ '  <x:ExcelWorkbook>'
+					+ '    <x:ExcelWorksheets>'
+					+ '      <x:ExcelWorksheet>'
+					+ '        <x:Name>{worksheet}</x:Name>'
+					+ '        <x:WorksheetOptions>'
+					+ '          <x:DisplayGridlines/>'
+					+ '        </x:WorksheetOptions>'
+					+ '      </x:ExcelWorksheet>'
+					+ '    </x:ExcelWorksheets>'
+					+ '  </x:ExcelWorkbook>'
+					+ '</xml>'
+					+ '<![endif]-->'
+					+ '</head>'
+					+ '<body>'
+					+ '  <table>{table}</table>'
+					+ '</body>' + '</html>';
+
+			if (!table.nodeType)
+				table = document.getElementById(table)
+
+			var ctx = {
+				worksheet : name || 'Worksheet',
+				table : table.innerHTML
+			}
+
+			document.getElementById("dlink").href = uri
+					+ base64(format(template, ctx));
+
+			document.getElementById("dlink").download = filename;
+
+			document.getElementById("dlink").click();
+
+		}
+
+		function base64(s) {
+			return window.btoa(unescape(encodeURIComponent(s)))
+		}
+
+		function format(s, c) {
+			return s.replace(/{(\w+)}/g, function(m, p) {
+				return c[p];
+			})
+		}
+	</script>
+	<script>
+		$(document).ready(function() {
+			$('#dataTables-example').DataTable({
+				responsive : true
+			});
+		});
+	</script>
+	
+	<script>
+		$(document).ready(function() {
+			$('#dataTables-example1').DataTable({
+				responsive : true
+			});
+		});
+	</script>
+
+</body>
+</html>

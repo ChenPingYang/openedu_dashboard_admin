@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="shortcut icon" href="{% static 'img/favicon.png'%}">
+<title>中華開放教育平台</title>
+
+<!-- w3school  -->
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<!-- Bootstrap Core CSS -->
+<link href="{% static './vendor/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+
+<!-- MetisMenu CSS -->
+<link href="{% static './vendor/metisMenu/metisMenu.min.css'%}" rel="stylesheet">
+
+<!-- DataTables CSS -->
+<link href="{% static './vendor/datatables-plugins/dataTables.bootstrap.css'%}"
+	rel="stylesheet">
+
+<!-- DataTables Responsive CSS -->
+<link href="{% static './vendor/datatables-responsive/dataTables.responsive.css'%}"
+	rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="{% static 'dist/css/sb-admin-2.css'%}" rel="stylesheet">
+
+<!-- Custom Fonts -->
+<!--
+<link href="./vendor/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css">
+-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNInG: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+	<script language="javascript">
+		function TestBlack(TagName){
+ 			var obj = document.getElementsByClassName(TagName);
+ 			var i = 0;
+ 			for(i = 0; i<obj.length;i++){
+ 				if(obj[i].style.display==""){
+ 	 				 obj[i].style.display = "none";
+ 	 			}
+ 	 			else{
+ 	 			 obj[i].style.display = "";
+ 	 			}
+ 			}
+
+		}
+	</script>
+
+	{% include 'sidebar.html' %}
+	<div id="wrapper">
+
+		<!-- Navigation -->
+
+		<div id="page-wrapper">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1 class="page-header">課程合計</h1>
+				</div>
+				<!-- /.col-lg-12 -->
+			</div>
+			<!-- /.row -->
+
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<div class="row">
+								<div class="col-md-8">{{finalUpdate}}</div>
+
+							</div>
+						</div>
+						<!-- /.panel-heading -->
+						<div class="panel-body">
+							<table width="100%"
+								class="table table-bordered table-hover"
+								id="dataTables-example" style="background-color:#d6eaf9">
+								<thead>
+									<tr class="bg-info">
+										<th id = "0">相同課程代碼</th>
+										<th id = "1">課程代碼</th>
+										<th id = "2">課程編號</th>
+										<th id = "3">課程名稱</th>
+										<th id = "4">註冊人數_台灣</th>
+										<th id = "5">註冊人數_非台灣</th>
+										<th id = "6">參與度</th>
+										<th id = "7">退選人數</th>
+
+									</tr>
+								</thead>
+								<tbody>
+
+										{% for testList in result_sum %}
+											<tr >
+
+								 					<td  onclick="TestBlack('{{testList.7}}')">{{testList.7}}</td>
+													<td headers = "1">{{testList.0}}</td>
+													<td id = "2">{{testList.1}}</td>
+													<td headers= "3">{{testList.2}}</td>
+													<td headers = "4" style="text-align: right;">{{testList.3}}</td>
+													<td headers = "5" style="text-align: right;">{{testList.4}}</td>
+													<td headers = "6" style="text-align: right;">{{testList.5}}</td>
+													<td headers = "7" style="text-align: right;">{{testList.6}}</td>
+											</tr>
+
+												{% for List in result_list %}
+													{% with testList.7 as IdCompare %}
+													{% with List.7 as IdCompare2 %}
+
+													{% if IdCompare1 == IdCompare2 %}
+														<tr Class = "{{List.7}}" style="display:none;background-color:#fff">
+
+															<td headers="0">{{List.7}}</td>
+															<td headers="1">
+																<a href="/ChartDataServlet?mode=2&course={{List.0}}" target="_blank" >{{List.0}}
+																	<i class="fa fa-bar-chart"></i>
+																</a>
+															</td>
+															<td headers="2">
+																<a href="https://courses.openedu.tw/courses/{{testList.1}}/info" target="_blank">{{List.1}}
+																	<i  class="fa fa-external-link"></i>
+																</a>
+															</td>
+															<td headers="3">{{List.2}}</td>
+															<td headers="4" style="text-align: right;">{{List.3}}</td>
+															<td headers="5" style="text-align: right;">{{List.4}}</td>
+															<td headers="6" style="text-align: right;">{{List.5}}</td>
+															<td headers="7" style="text-align: right;">{{List.6}}</td>
+
+														</tr>
+													{% endif %}
+												{% endwith %}
+												{% endwith %}
+												{% endfor %}
+										{% endfor %}
+
+
+								</tbody>
+							</table>
+						</div>
+						<!-- /.panel-body -->
+					</div>
+					<!-- /.panel -->
+				</div>
+				<!-- /.col-lg-12 -->
+			</div>
+			<!-- /.row -->
+		</div>
+	</div>
+
+	<!-- jQuery -->
+	<script src="{% static './vendor/jquery/jquery.min.js'%}"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="{% static './vendor/bootstrap/js/bootstrap.min.js'%}"></script>
+
+	<!-- Metis Menu Plugin JavaScript -->
+	<script src="{% static './vendor/metisMenu/metisMenu.min.js'%}"></script>
+
+	<!-- DataTables JavaScript -->
+	<script src="{% static './vendor/datatables/js/jquery.dataTables.js'%}"></script>
+	<script src="{% static './vendor/datatables-plugins/dataTables.bootstrap.min.js'%}"></script>
+	<script src="{% static './vendor/datatables-responsive/dataTables.responsive.js'%}"></script>
+
+	<!-- Custom Theme JavaScript -->
+	<script src="{% static './dist/js/sb-admin-2.js'%}"></script>
+	<!-- Page-Level Demo Scripts - Tables - Use for reference -->
+	<script>
+		$(document).ready(function() {
+			$('#dataTables-example').DataTable({
+				responsive : true,
+				sScrollY:"800px"
+			});
+		});
+	</script>
+
+	<!-- tooltip -->
+	<script>
+		$(document).ready(function() {
+			$('[data-toggle="tooltip"]').tooltip();
+		});
+	</script>
+</body>
+</html>

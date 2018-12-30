@@ -1,0 +1,14 @@
+AnalysisGroup: 234行的str(), 325行的sql語法必要性, 425行forumNumber重新宣告後是否影響, 92行疑似程式有誤
+
+AnalysisCourse: 80行是否需要str(), 
+
+
+
+------------以下為不使用request.GET['e.g.']--------------------
+AnalysisCourse
+
+
+
+
+
+------------把所有原本是while(rs.next())的程式檢查一遍並設初始值以及用if包起來------------------------
